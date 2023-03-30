@@ -21,7 +21,7 @@ class Vectorizer:
 
   # Preprocessing function to remove some noise due to the translation.
   @staticmethod
-  def clean_samples(self,input_data):
+  def clean_samples(input_data):
     tag_author_lang_en_removed = tf.strings.regex_replace(input_data,'<author lang="en">', '')
     tag_opening_document_miscased = tf.strings.regex_replace(tag_author_lang_en_removed,'<Document>', '<document>')
     tag_closing_document_miscased = tf.strings.regex_replace(tag_opening_document_miscased,'</Document>', '</document>')
