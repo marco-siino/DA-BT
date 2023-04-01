@@ -18,8 +18,8 @@ class Dataset:
         self.language = language
         self.ds_name = ds_name
 
-        self.url_train_set = "https://github.com/marco-siino/DA-ESWA/raw/main/data/"+ds_name+"/"+ds_name+"-train-"+language+".zip"
-        self.url_test_set = "https://github.com/marco-siino/DA-ESWA/raw/main/data/"+ds_name+"/"+ds_name+"-test-"+language+".zip"
+        self.url_train_set = "https://github.com/marco-siino/DA-BT/raw/main/data/"+ds_name+"/"+ds_name+"-train-"+language+".zip"
+        self.url_test_set = "https://github.com/marco-siino/DA-BT/raw/main/data/"+ds_name+"/"+ds_name+"-test-"+language+".zip"
         
     def fetch_ds_files(self):
         self.train_set_archive = tf.keras.utils.get_file(self.ds_name+'-train-'+self.language+'.zip', self.url_train_set,
