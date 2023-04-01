@@ -32,6 +32,7 @@ class Vectorizer:
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'</doc>', '</document>')  
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'</documentation>', '</document>')
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'</ document>', '</document>')
+    wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'<documentment>', '<document>')
     
     tag_opening_documents = tf.strings.regex_replace(wrong_tag_document,'<documents>', '')
     tag_opening_cdata_removed = tf.strings.regex_replace(tag_opening_documents,'<\!\[CDATA\[', ' ')
