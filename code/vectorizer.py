@@ -25,12 +25,13 @@ class Vectorizer:
     tag_author_lang_en_removed = tf.strings.regex_replace(input_data,'<author lang="en">', '')
     tag_opening_document_miscased = tf.strings.regex_replace(tag_author_lang_en_removed,'<Document>', '<document>')
     tag_closing_document_miscased = tf.strings.regex_replace(tag_opening_document_miscased,'</Document>', '</document>')
-    # In Japanese several mistakes are made in translating the tag <document>. Here we correct all of them.
+    # In Japanese and Turkish several mistakes are made in translating opening and closing tag document. Here we correct all of them.
     wrong_tag_document = tf.strings.regex_replace(tag_closing_document_miscased,'<Documentation>', '<document>')
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'<Source>', '<document>')
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'<doc>', '<document>')   
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'</doc>', '</document>')  
     wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'</documentation>', '</document>')
+    wrong_tag_document = tf.strings.regex_replace(wrong_tag_document,'</ document>', '</document>')
     
     tag_opening_documents = tf.strings.regex_replace(wrong_tag_document,'<documents>', '')
     tag_opening_cdata_removed = tf.strings.regex_replace(tag_opening_documents,'<\!\[CDATA\[', ' ')
