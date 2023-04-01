@@ -36,11 +36,11 @@ class Dataset:
           self.train_folder_name = "pan20-author-profiling-training-2020-02-23-"+self.language
           self.test_folder_name = "pan20-author-profiling-test-2020-02-23-"+self.language
         elif ds_name == 'hss':
-          self.train_folder_name = "pan20-author-profiling-training-2020-02-23-"+self.language
-          self.test_folder_name = "pan20-author-profiling-test-2020-02-23-"+self.language
+          self.train_folder_name = "pan21-author-profiling-training-2021-03-14-"+self.language
+          self.test_folder_name = "pan21-author-profiling-test-2021-03-14-"+self.language
         elif ds_name == 'iss':
-          self.train_folder_name = "pan20-author-profiling-training-2020-02-23-"+self.language
-          self.test_folder_name = "pan20-author-profiling-test-2020-02-23-"+self.language
+          self.train_folder_name = "pan22-author-profiling-training-2022-03-29-"+self.language
+          self.test_folder_name = "pan22-author-profiling-test-2022-04-22-"+self.language
         else: 
           print("\nNo ds_name found!")        
 
