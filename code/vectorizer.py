@@ -46,7 +46,7 @@ class Vectorizer:
     # Set a large sequence length to find the longest sample in the training set.
     sequence_length = 200000
     vectorize_layer = TextVectorization(
-        standardize=self.clean_samples,
+        standardize=Vectorizer.clean_samples(),
         output_mode='int',
         output_sequence_length=sequence_length)
 
@@ -81,7 +81,7 @@ class Vectorizer:
     sequence_length = longest_sample_length
 
     vectorize_layer = TextVectorization(
-        standardize=self.clean_samples,
+        standardize=Vectorizer.clean_samples(),
         output_mode='int',
         output_sequence_length=sequence_length)
 
