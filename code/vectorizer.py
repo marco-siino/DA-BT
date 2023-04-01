@@ -28,8 +28,8 @@ class Vectorizer:
     tag_opening_documents = tf.strings.regex_replace(tag_closing_document_miscased,'<documents>', '')
     tag_opening_cdata_removed = tf.strings.regex_replace(tag_opening_documents,'<\!\[CDATA\[', ' ')
     tag_closing_cdata_removed = tf.strings.regex_replace(tag_opening_cdata_removed,'\]\]>', ' >')
-    tag_closing_author_removed = tf.strings.regex_replace(tag_closing_cdata_removed,'</author>', '')
-    output_data = tf.strings.regex_replace(tag_closing_cdata_removed,'</documents>', '')
+    tag_hss_author_removed = tf.strings.regex_replace(tag_closing_cdata_removed,'<author lang="en" class="1">', '')
+    output_data = tf.strings.regex_replace(tag_hss_author_removed,'</documents>', '')
     return output_data
 
   def __init__(self, train_set):
