@@ -8,8 +8,10 @@ Original file is located at
 """
 
 import tensorflow as tf
+import numpy as np
 from tensorflow.keras import layers
 from tensorflow.keras import losses
+from sklearn import svm
 
 class Simulator:
 
@@ -34,12 +36,13 @@ class Simulator:
 
     if self.model=="cnn":
       self.setup_shallow()
+      print("\nSetup for shallow model completed.")
     
     if self.model == "roberta":
       self.setup_transformer()
 
     if self.model == "svm":
-      self.setup_deterministic()
+      print("\nSetup for deterministic model completed.")
 
   def setup_shallow(self):
     # Word embedding dimensions.
@@ -52,6 +55,8 @@ class Simulator:
   def run(self):
     if self.model == "cnn":
       self.run_cnn()
+    if self.model == "svm":
+      self.run_svm()
 
   def run_cnn(self):
     for run in range(1,(self.nr_runs+1)):
@@ -101,3 +106,80 @@ class Simulator:
       max_range_from_median = self.runs_accuracy[4]-self.runs_accuracy[2]
     final_result = str(self.runs_accuracy[2])+" +/- "+ str(max_range_from_median)
     print("CNN Accuracy Score on test set -> ",final_result)
+
+  def run_svm(self):
+    # # # - - - - - MODELS DEFINITION AND EVALUATION - - - - - # # #
+
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.Input(shape=(1,), dtype=tf.string))
+    model.add(self.vectorize_layer)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+    training_labels=[]
+    training_samples=[]
+
+    max_features=len(self.vectorize_layer.get_vocabulary()) + 1
+
+    for element in self.train_set:
+      authorDocument=element[0]
+      label=element[1]
+      
+      #print("Sample considered is: ", authorDocument[0])
+      #print("Preprocessed: ", str(custom_standardization(authorDocument[0].numpy())))
+      #print("And has label: ", label[0].numpy())
+      
+      text_vect_layer_model = tf.keras.Model(inputs=model.input,
+                                          outputs=model.layers[0].output)
+      text_vect_out = text_vect_layer_model(authorDocument)
+
+      training_labels.append(label[0].numpy())
+      current_sample=np.zeros(max_features)
+      for current_token in text_vect_out[0][:].numpy():
+        #print(current_token,end=' ')
+        #print(vectorize_layer.get_vocabulary()[current_token])
+        current_sample[current_token]+=1
+      training_samples.append(current_sample)
+      #break
+
+    training_labels=np.array(training_labels)
+    training_samples=np.array(training_samples)
+    #print("\nLE LABELS DEI CAMPIONI DI TRAINING SONO:")
+    #print(training_labels)
+    #print("\nI SAMPLE DI TRAINING DOPO LA TEXT VECTORIZATION SONO:")
+    #print(training_samples)
+
+    test_labels=[]
+    test_samples=[]
+
+    for element in self.test_set:
+      authorDocument=element[0]
+      label=element[1]
+      
+      text_vect_layer_model = tf.keras.Model(inputs=model.input,
+                                          outputs=model.layers[0].output)
+      text_vect_out = text_vect_layer_model(authorDocument)
+
+      test_labels.append(label[0].numpy())
+      current_sample=np.zeros(max_features)
+      for current_token in text_vect_out[0][:].numpy():
+        current_sample[current_token]+=1
+      test_samples.append(current_sample)
+
+    test_labels=np.array(test_labels)
+    test_samples=np.array(test_samples)
+
+    SVM = svm.SVC(C=0.5, kernel='linear', gamma='auto')
+    SVM.fit(training_samples,training_labels)
+    # predict the labels on training set
+    #predictions_SVM = SVM.predict(training_samples)
+    # Use accuracy_score function to get the accuracy
+    result=SVM.score(training_samples,training_labels)
+    print("SVM Accuracy Score on Training set -> ",result)
+
+    # predict the labels on validation dataset
+    predictions_SVM = SVM.predict(test_samples)
+    # Use accuracy_score function to get the accuracy
+    result=SVM.score(test_samples,test_labels)
+    print("SVM Accuracy Score on Test set -> ",result)
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
