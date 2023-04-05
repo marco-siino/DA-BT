@@ -236,6 +236,7 @@ class Simulator:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   def run_roberta(self):
+    cuda_available = torch.cuda.is_available()
 
     model_args = ClassificationArgs(num_train_epochs=1, 
                                         no_save=True, 
