@@ -16,7 +16,6 @@ Original file is located at
     https://colab.research.google.com/drive/1WpBKY4_pCE4EvJlPgo1v4HKQyXm4uSDR
 """
 
-!pip install simpletransformers
 import tensorflow as tf
 import numpy as np
 import pandas as pd
