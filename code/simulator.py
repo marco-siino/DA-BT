@@ -23,6 +23,7 @@ import torch
 from tensorflow.keras import layers
 from tensorflow.keras import losses
 from sklearn import svm
+from urllib import request
 from simpletransformers.classification import ClassificationModel, ClassificationArgs
 
 # Import class Vectorizer
