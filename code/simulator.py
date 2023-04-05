@@ -89,7 +89,7 @@ class Simulator:
     self.train_df = pd.DataFrame(self.train_df)
 
     self.test_df = [] # will contain text and label
-    for element in self.test_ds:
+    for element in self.test_set:
       authorDocument=element[0]
       label=int(element[1].numpy())
       #print(authorDocument[0])
