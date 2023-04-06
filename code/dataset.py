@@ -97,6 +97,11 @@ class Dataset:
           fNameTxt = x[0]+'.txt'
           # Second coord [0] gets just the first character (label) and not /n too.
           label = x[1][0]
+          if label == 'I':
+            label = '1'
+          elif label == 'N':
+            label = '0'
+            
 
           # Now move the file to the right folder.
           if os.path.exists(self.source_train_dir+'/en/'+fNameXml):
@@ -119,6 +124,10 @@ class Dataset:
           fNameTxt = x[0]+'.txt'
           # Second coord [0] gets just the first character (label) and not /n too.
           label = x[1][0]
+          if label == 'I':
+            label = '1'
+          elif label == 'N':
+            label = '0'
 
           # Now move the file to the right folder.          
           if os.path.exists(self.source_test_dir+'/en/'+fNameXml):
