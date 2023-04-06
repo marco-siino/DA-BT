@@ -40,7 +40,7 @@ class Dataset:
           self.test_folder_name = "pan21-author-profiling-test-without-gold-"+self.language
         elif ds_name == 'iss':
           self.train_folder_name = "pan22-author-profiling-training-2022-03-29-"+self.language
-          self.test_folder_name = "pan22-author-profiling-test-2022-04-22-"+self.language
+          self.test_folder_name = "pan22-author-profiling-test-2022-04-22-without_truth-"+self.language
         else: 
           print("\nNo ds_name found!")        
 
